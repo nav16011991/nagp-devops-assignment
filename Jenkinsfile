@@ -32,7 +32,7 @@ pipeline {
 
         stage("Run Integration Test cases") {
             steps {
-                sh "mvn clean test"
+                sh "mvn clean verify"
             }
         }
 
