@@ -27,7 +27,7 @@ pipeline {
         stage('Build and push image') {
             steps {
                 script {
-                    docker.withRegistry('https://hub.docker.com', 'docker_credentials') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_credentials') {
 
                         def customImage = docker.build("naveenbhardwaj/nagp-devops-assignment")
 
