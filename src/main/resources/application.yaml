@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/db_accounts
+    username: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+  application:
+    name: nagp-devops-assignment
+
+#opentracing:
+#  jaeger:
+#    udp-sender:
+#      host: localhost
+#      port: 6831
+#    log-spans: true
+
+server:
+  port: ${PORT:9001}
+  servlet:
+    context-path: /account
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
