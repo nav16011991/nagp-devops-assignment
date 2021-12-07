@@ -18,9 +18,21 @@ pipeline {
                sh "mvn clean compile"
             }
         }
-        stage("Run Test cases") {
+        stage("Run Unit Test cases") {
            steps {
                sh "mvn clean test"
+            }
+        }
+
+        stage("Package") {
+            steps {
+               sh "mvn clean package"
+            }
+        }
+
+        stage("Run Integration Test cases") {
+            steps {
+                sh "mvn clean test"
             }
         }
 
@@ -37,6 +49,8 @@ pipeline {
                 }
             }
         }
+
+
 
     }
  }
