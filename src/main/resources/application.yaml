@@ -11,13 +11,6 @@ spring:
   application:
     name: nagp-devops-assignment
 
-#opentracing:
-#  jaeger:
-#    udp-sender:
-#      host: localhost
-#      port: 6831
-#    log-spans: true
-
 server:
   port: ${PORT:9001}
   servlet:

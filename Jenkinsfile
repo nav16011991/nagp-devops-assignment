@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    tools {
-        maven 'MAVEN'
-        dockerTool 'DOCKER'
-    }
     stages {
         stage("Tools initialization") {
             steps {
@@ -22,20 +18,24 @@ pipeline {
                sh "mvn clean compile"
             }
         }
-        stage("Run Test cases") {
+        stage("Run Unit Test cases") {
            steps {
                sh "mvn clean test"
             }
         }
 
+        stage("Package") {
+            steps {
+               sh "mvn clean package"
+            }
+        }
+
         stage('Build and push image') {
             steps {
-                node {
-                    checkout scm
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_credentials') {
 
-                    docker.withRegistry('https://registry.example.com', 'credentials-id') {
-
-                        def customImage = docker.build("my-image:${env.BUILD_ID}")
+                        def customImage = docker.build("naveenbhardwaj/nagp-devops-assignment")
 
                         /* Push the container to the custom Registry */
                         customImage.push()
@@ -43,6 +43,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploying images') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
+
+        stage("Run Integration Test cases") {
+            steps {
+                 sh "mvn clean verify"
+            }
+        }
+
 
     }
  }
