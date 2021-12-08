@@ -1,21 +1,17 @@
 version: "3.9"
-networks:
-  nagp-devops-assignment:
-
 services:
-  db:
+  db_mysql:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
+      MYSQL_DATABASE: 'db_accounts'
       MYSQL_ROOT_PASSWORD: root
     ports: 
       - 3306:3306
   nagp-devops-assignment:
-    image: "naveenbhardwaj/nagp-devops-assignment:latest"
+    image: "naveenbhardwaj/nagp-devops-assignment"
     environment:
        - "SPRING_PROFILES_ACTIVE=prod"
-    networks:
-      - nagp-devops-assignment
     ports:
       - 9001:9001
