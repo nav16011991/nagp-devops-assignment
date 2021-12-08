@@ -30,12 +30,6 @@ pipeline {
             }
         }
 
-        stage("Run Integration Test cases") {
-            steps {
-                sh "mvn clean verify"
-            }
-        }
-
         stage('Build and push image') {
             steps {
                 script {
@@ -50,6 +44,17 @@ pipeline {
             }
         }
 
+        stage('Deploying images') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
+
+        stage("Run Integration Test cases") {
+            steps {
+                 sh "mvn clean verify"
+            }
+        }
 
 
     }
